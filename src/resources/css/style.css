@@ -11,6 +11,13 @@
   --body-fg: #A3A3A3;
   --box-bg: #FFFFFF;
   --controls-bg: #383838;
+
+  --box-width: 900px;
+  --box-height: 450px
+}
+
+* {
+  cursor: default;
 }
 
 html {
@@ -32,7 +39,7 @@ a {
   cursor: not-allowed;
 }
 
-a[onclick] {
+[onclick] {
   cursor: pointer;
 }
 
@@ -119,9 +126,9 @@ a[onclick] {
   background: var(--box-bg);
   border: 2px solid black;
   max-width: 100%;
-  width: 800px;
+  width: var(--box-width);
   max-height: 100%;
-  height: 400px;
+  height: var(--box-height);
   position: absolute;
   top: 45%;
   left: 50%;
@@ -135,7 +142,7 @@ a[onclick] {
   position: absolute;
   top: 45%;
   left: 50%;
-  transform: translateX(-50%) translateY(200px);
+  transform: translateX(-50%) translateY(calc(var(--box-height)/2));
   display: flex;
   flex-direction: column;
   justify-content: center;
