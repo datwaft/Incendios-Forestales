@@ -1,0 +1,169 @@
+:root {
+  --banner-bg: #3A3D3D;
+  --banner-fg: #A3A3A3;
+  --nav-bg: #532F2F;
+  --nav-fg: #A3A3A3;
+  --nav-bg-alt: #FF8040;
+  --nav-fg-alt: #333333;
+  --nav-bg-sel: #398A40;
+  --nav-fg-sel: #333333;
+  --body-bg: #666666;
+  --body-fg: #A3A3A3;
+}
+
+html {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  font-family: sans-serif;
+}
+
+body {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  cursor: not-allowed;
+}
+
+a[onclick] {
+  cursor: pointer;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.nav li {
+  text-align: center;
+  padding: .5rem;
+}
+
+.nav li:not(:last-child) {
+  border-right: 1px solid black;
+}
+
+
+.nav a {
+  display: inline-block;
+  position: relative;
+  z-index: 1;
+  padding: .5rem;
+  margin: -.5rem;
+}
+
+.body {
+  flex-grow: 1;
+  position: relative;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-style,
+.footer-style {
+  background: var(--banner-bg);
+  color: var(--banner-fg);
+}
+
+.nav-style {
+  background: var(--nav-bg);
+  color: var(--nav-fg);
+  font-weight: bold;
+}
+
+.nav-style li:hover,
+.nav-style li:focus {
+  background: var(--nav-bg-alt);
+  color: var(--nav-fg-alt);
+}
+
+.nav-style .selected {
+  background: var(--nav-bg-sel);
+  color: var(--nav-fg-sel);
+  cursor: not-allowed !important;
+}
+
+.body-style {
+  background: var(--body-bg);
+  color: var(--body-fg);
+}
+
+.footer-style {
+  font-weight: bold;
+  padding: .5rem;
+}
+
+.box {
+  background: white;
+  border: 2px solid black;
+  max-width: 100%;
+  width: 800px;
+  max-height: 100%;
+  height: 400px;
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+}
+
+.controls {
+  background: #383838;
+  border: 2px solid black;
+  padding: .5rem;
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translateX(-50%) translateY(200px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.controls .buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.controls button {
+  padding: 5px 10px;
+  border: 2px solid black;
+}
+
+.controls .fa {
+  font-size: 1.5rem;
+}
+
+.controls .fa-play-circle {
+  color: green;
+}
+
+.controls .fa-pause-circle {
+  color: red;
+}
+
+.controls .fa-retweet {
+  color: orange;
+}
