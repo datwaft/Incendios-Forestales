@@ -9,6 +9,8 @@
   --nav-fg-sel: #333333;
   --body-bg: #666666;
   --body-fg: #A3A3A3;
+  --box-bg: #FFFFFF;
+  --controls-bg: #383838;
 }
 
 html {
@@ -114,7 +116,7 @@ a[onclick] {
 }
 
 .box {
-  background: white;
+  background: var(--box-bg);
   border: 2px solid black;
   max-width: 100%;
   width: 800px;
@@ -127,7 +129,7 @@ a[onclick] {
 }
 
 .controls {
-  background: #383838;
+  background: var(--controls-bg);
   border: 2px solid black;
   padding: .5rem;
   position: absolute;
