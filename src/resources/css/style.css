@@ -35,10 +35,6 @@ body {
   padding: 0;
 }
 
-a {
-  cursor: not-allowed;
-}
-
 [onclick] {
   cursor: pointer;
 }
