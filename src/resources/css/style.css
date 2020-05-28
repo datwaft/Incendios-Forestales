@@ -35,6 +35,10 @@ body {
   padding: 0;
 }
 
+input[type="range"] {
+  width: 300px;
+}
+
 [onclick] {
   cursor: pointer;
 }
