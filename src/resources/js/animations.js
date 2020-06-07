@@ -1,0 +1,263 @@
+class Packet {
+  constructor(tl, pos, offset = null) {
+    this.time = (offset ? offset : tl.duration);
+    this.tl = tl;
+    this.pos = {
+      top: pos.top,
+      left: pos.left
+    };
+    this.jquery = $('<i>', {
+      class: 'fa fa-envelope packet',
+    }).appendTo('#canvas');
+    this.element = this.jquery.get(0);
+    this.tl.add({
+      targets: this.element,
+      top: [this.pos.top, this.pos.top],
+      left: [this.pos.left, this.pos.left],
+      opacity: [0, 1],
+      duration: 300
+    }, this.time + 300)
+    this.time += 300 + 300;
+  }
+  calcDuration(pos) {
+    var topDiff = Math.abs(parseInt(this.pos.top) - parseInt(pos.top ? pos.top : this.pos.top))
+    var leftDiff = Math.abs(parseInt(this.pos.left) - parseInt(pos.left ? pos.left : this.pos.left))
+    var mean = (topDiff + leftDiff)
+    return mean * 8
+  }
+  move(pos) {
+    if (pos instanceof Array) {
+      pos.forEach((e, i) => {
+        if (e.top == this.pos.top && e.left == this.pos.left) return;
+        if (i == 0) {
+          this.tl.add({
+            targets: this.element,
+            top: [this.pos.top, (e.top ? e.top : this.pos.top)],
+            left: [this.pos.left, (e.left ? e.left : this.pos.left)],
+            duration: this.calcDuration(e)
+          }, this.time + 200);
+          this.time += this.calcDuration(e) + 200;
+        } else {
+          this.tl.add({
+            targets: this.element,
+            top: [this.pos.top, (e.top ? e.top : this.pos.top)],
+            left: [this.pos.left, (e.left ? e.left : this.pos.left)],
+            duration: this.calcDuration(e)
+          }, this.time);
+          this.time += this.calcDuration(e);
+        }
+        this.pos = {
+          top: (e.top ? e.top : this.pos.top),
+          left: (e.left ? e.left : this.pos.left)
+        }
+      });
+    } else {
+      this.tl.add({
+        targets: this.element,
+        top: [this.pos.top, (pos.top ? pos.top : this.pos.top)],
+        left: [this.pos.left, (pos.left ? pos.left : this.pos.left)],
+        duration: this.calcDuration(pos)
+      }, this.time + 200);
+      this.time += this.calcDuration(pos) + 200;
+      this.pos = {
+        top: (pos.top ? pos.top : this.pos.top),
+        left: (pos.left ? pos.left : this.pos.left)
+      }
+    }
+    return this;
+  }
+  destroy() {
+    this.tl.add({
+      targets: this.element,
+      opacity: 0,
+      duration: 300
+    }, this.time + 200);
+    this.time += 300 + 200;
+    return this;
+  }
+}
+// Ubicación de los diferentes cosos
+var sensor1 = {top: '232px', left: '476px'};
+var sensor2 = {top: '289px', left: '446px'};
+var sensor3 = {top: '335px', left: '481px'};
+var sensor4 = {top: '382px', left: '447px'};
+var sensor5 = {top: '428px', left: '476px'};
+var sensor6 = {top: '231px', left: '591px'};
+var sensor7 = {top: '286px', left: '620px'};
+var sensor8 = {top: '335px', left: '589px'};
+var sensor9 = {top: '382px', left: '620px'};
+var sensor10 = {top: '427px', left: '591px'};
+var server = {top: '15px', left: '241px'};
+var sinac = {top: '46px', left: '85px'};
+var aws = {top: '187px', left: '75px'};
+var station = {top: '345px', left: '82px'};
+var pc = {top: '383px', left: '156px'};
+var cellphone = {top: '391px', left: '192px'};
+var tablet = {top: '389px', left: '313px'};
+var main = {
+  left: {top: '164px', left: '517px'},
+  right: {top: '164px', left: '552px'},
+  top: {top: '123px', left: '535px'}
+};
+var internet = {
+  left: {top: '202px', left: '205px'},
+  top: {top: '163px', left: '260px'},
+  bottom: {top: '238px', left: '257px'}
+};
+var router1 = {
+	left: {top: '84px', left: '238px'},
+	right: {top: '84px', left: '282px'},
+	bottom: {top: '98px', left: '258px'}
+};
+var router2 = {
+	left: {top: '84px', left: '415px'},
+	right: {top: '84px', left: '460px'}
+};
+var router3 = {
+	left: {top: '304px', left: '234px'},
+	top: {top: '290px', left: '257px'}
+};
+var switch1 = {
+	left: {top: '64px', left: '110px'},
+	right: {top: '64px', left: '149px'},
+  top: {top: '51px', left: '128px'}
+};
+var switch2 = {
+  left: {top: '329px', left: '109px'},
+  right: {top: '329px', left: '149px'},
+  top: {top: '318px', left: '130px'},
+  bottom: {top: '336px', left: '130px'}
+};
+var wireless = {
+  left: {top: '345px', left: '228px'},
+  left_bottom: {top: '354px', left: '228px'},
+  right: {top: '346px', left: '268px'}
+};
+// Caminos
+var sensor1_to_main = [
+  sensor1,
+  {top: '202px', left: '477px'},
+  main.left
+];
+var sensor6_to_main = [
+  sensor6,
+  {top: '202px', left: '590px'},
+  main.right
+];
+var main_to_router2 = [
+  main.top,
+  {top: '84px', left: '535px'},
+  router2.right
+];
+var router1_to_switch1 = [
+  router1.left,
+  {top: '84px', left: '217px'},
+  {top: '64px', left: '217px'},
+  switch1.right
+];
+var switch1_to_server = [
+  switch1.top,
+  {top: '16px', left: '128px'},
+  server
+];
+var switch1_to_sinac = [
+  switch1.left,
+  {top: '62px', left: '97px'},
+  {top: '46px', left: '97px'},
+  sinac
+];
+var internet_to_aws = [
+  internet.left,
+  {top: '188px', left: '189px'},
+  aws
+];
+var router3_to_switch2 = [
+  router3.left,
+  {top: '304px', left: '130px'},
+  switch2.top
+];
+var switch2_to_station = [
+  switch2.left,
+  {top: '329px', left: '93px'},
+  {top: '345px', left: '93px'},
+  station
+];
+var switch2_to_wireless = [
+  switch2.right,
+  {top: '329px', left: '167px'},
+  {top: '345px', left: '167px'},
+  wireless.left
+];
+var switch2_to_pc = [
+  switch2.bottom,
+  {top: '367px', left: '130px'},
+  {top: '367px', left: '156px'},
+  pc
+];
+// -----------------------------------
+function from_var1_to_main(tl) {
+  new Packet(tl, sensor3)
+    .move(sensor2)
+    .move(sensor1)
+    .move(sensor1_to_main)
+    .destroy();
+}
+function from_main_to_router(tl) {
+  new Packet(tl, main.top)
+    .move(main_to_router2)
+    .destroy();
+  new Packet(tl, router2.left)
+    .move(router1.right)
+    .destroy();
+}
+function from_router_to_server(tl) {
+  new Packet(tl, router1.left)
+    .move(router1_to_switch1)
+    .destroy();
+  new Packet(tl, switch1.top)
+    .move(switch1_to_server)
+    .destroy();
+}
+function from_server_to_everyone(tl) {
+  var time = new Packet(tl, server)
+    .move(switch1_to_server.reverse())
+    .destroy()
+    .time;
+  new Packet(tl, switch1.left, time)
+    .move(switch1_to_sinac)
+    .destroy();
+  new Packet(tl, switch1.right, time)
+    .move(router1_to_switch1.reverse())
+    .destroy();
+  time = new Packet(tl, router1.bottom)
+    .move(internet.top)
+    .destroy()
+    .time;
+  new Packet(tl, internet.left, time)
+    .move(internet_to_aws)
+    .destroy();
+  time = new Packet(tl, internet.bottom, time)
+    .move(router3.top)
+    .destroy()
+    .time;
+  time = new Packet(tl, router3.left, time)
+    .move(router3_to_switch2)
+    .destroy()
+    .time;
+  new Packet(tl, switch2.left, time)
+    .move(switch2_to_station)
+    .destroy();
+  new Packet(tl, switch2.bottom, time)
+    .move(switch2_to_pc)
+    .destroy();
+  time = new Packet(tl, switch2.right, time)
+    .move(switch2_to_wireless)
+    .destroy()
+    .time;
+  new Packet(tl, wireless.left_bottom, time)
+    .move(cellphone)
+    .destroy();
+  new Packet(tl, wireless.right, time)
+    .move(tablet)
+    .destroy();
+}

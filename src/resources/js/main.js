@@ -1,11 +1,3 @@
-import { var1_animation } from './var1.js';
-import { var2_animation } from './var2.js';
-import { var3_animation } from './var3.js';
-import { var4_animation } from './var4.js';
-import { var5_animation } from './var5.js';
-import { var6_animation } from './var6.js';
-import { var7_animation } from './var7.js';
-
 $(document).ready(() => {
   console.log("Page has been loaded.");
   var1();
@@ -46,6 +38,7 @@ function var1() {
   $("#var-1").prop("onclick", null).off("click");
   $("#var-1").addClass("selected");
   clearAssets();
+  var1_createAssets();
   var1_animation();
 }
 function var2() {
@@ -55,6 +48,7 @@ function var2() {
   $("#var-2").prop("onclick", null).off("click");
   $("#var-2").addClass("selected");
   clearAssets();
+  var2_createAssets();
   var2_animation();
 }
 function var3() {
@@ -64,6 +58,7 @@ function var3() {
   $("#var-3").prop("onclick", null).off("click");
   $("#var-3").addClass("selected");
   clearAssets();
+  var3_createAssets();
   var3_animation();
 }
 function var4() {
@@ -73,6 +68,7 @@ function var4() {
   $("#var-4").prop("onclick", null).off("click");
   $("#var-4").addClass("selected");
   clearAssets();
+  var4_createAssets();
   var4_animation();
 }
 function var5() {
@@ -82,6 +78,7 @@ function var5() {
   $("#var-5").prop("onclick", null).off("click");
   $("#var-5").addClass("selected");
   clearAssets();
+  var5_createAssets();
   var5_animation();
 }
 function var6() {
@@ -91,6 +88,7 @@ function var6() {
   $("#var-6").prop("onclick", null).off("click");
   $("#var-6").addClass("selected");
   clearAssets();
+  var6_createAssets();
   var6_animation();
 }
 function var7() {
@@ -100,5 +98,6 @@ function var7() {
   $("#var-7").prop("onclick", null).off("click");
   $("#var-7").addClass("selected");
   clearAssets();
+  var7_createAssets();
   var7_animation();
 }

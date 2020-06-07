@@ -12,7 +12,7 @@
   --box-bg: #FFFFFF;
   --controls-bg: #383838;
 
-  --box-width: 900px;
+  --box-width: 843px;
   --box-height: 450px
 }
 
@@ -175,4 +175,24 @@ input[type="range"] {
 
 .controls .fa-retweet {
   color: orange;
+}
+
+.background {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.packet {
+  color: white;
+  opacity: 0;
+  font-size: 1rem;
+  position: absolute;
+  top: 74.4446%;
+  left: 57.052%;
+  text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
 }

@@ -1,11 +1,10 @@
-export function var7_animation() {
-  createAssets();
+function var7_animation() {
   console.log("Variable 7 animation has begun.");
   /*
    * Aquí se hace la animación, preferiblemente usando anime.timeline(parameters);
    */ 
 }
-function createAssets() {
+function var7_createAssets() {
   /*
    * Aquí uno añade el fondo y los objetos requeridos al objeto:
    *  $("#canvas")
