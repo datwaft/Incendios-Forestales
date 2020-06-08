@@ -123,6 +123,43 @@ class Message {
     return this;
   }
 }
+class Picture {
+  constructor(tl, pos, src, offset) {
+    this.time = (offset ? offset : tl.duration);
+    this.tl = tl;
+    this.pos = pos;
+    this.img = $('<img>', {
+      class: 'image',
+      src: src,
+      css: {
+        top: pos.top,
+        left: pos.left,
+      }
+    }).appendTo('#canvas');
+    tl.add({
+      targets: this.img.get(0),
+      opacity: 1,
+      duration: 500
+    }, this.time);
+    this.time += 500;
+  }
+  wait(duration) {
+    this.tl.add({
+      duration: duration
+    }, this.time);
+    this.time += duration;
+    return this;
+  }
+  destroy() {
+    this.tl.add({
+      targets: this.img.get(0),
+      opacity: 0,
+      duration: 500
+    }, this.time);
+    this.time += 500;
+    return this;
+  }
+}
 // Ubicación de los diferentes cosos
 var sensor1 = {top: '232px', left: '476px'};
 var sensor2 = {top: '289px', left: '446px'};
@@ -242,24 +279,6 @@ var switch2_to_pc = [
   pc
 ];
 // -----------------------------------
-function image(tl, pos, src) {
-  var img = $('<img>', {
-    class: 'image',
-    src: src,
-    css: {
-      top: pos.top,
-      left: pos.left,
-    }
-  }).appendTo('#canvas');
-  tl.add({
-    targets: img.get(0),
-    opacity: 1,
-    duration: 500
-  });
-  tl.add({
-    duration: 500
-  });
-}
 function new_coord(original, top, left) {
   return {
     top: (parseInt(original.top) + top) + 'px',
@@ -267,14 +286,23 @@ function new_coord(original, top, left) {
   };
 }
 function show_var1_initial(tl) {
-  image(tl, {top: '304px', left: '494px'}, 'resources/images/heat.png')
+  new Picture(tl, {top: '304px', left: '494px'}, 'resources/images/heat.png')
+    .wait(500);
   new Message(tl, new_coord(sensor3, 0, 7), $('<i>', {class: 'fa fa-exclamation-triangle'}))
     .wait(1000)
     .destroy();
 }
 function show_var2_initial(tl) {
-  image(tl, {top: '363px', left: '521px'}, 'resources/images/humidity.png')
+  new Picture(tl, {top: '363px', left: '521px'}, 'resources/images/humidity.png')
+    .wait(500);
   new Message(tl, new_coord(sensor10, 0, 7), $('<i>', {class: 'fa fa-exclamation-triangle'}))
+    .wait(1000)
+    .destroy();
+}
+function show_var3_initial(tl) {
+  new Picture(tl, {top: '205px', left: '402px'}, 'resources/images/fire.png')
+    .wait(500);
+  new Message(tl, new_coord(sensor2, 0, 7), $('<i>', {class: 'fa fa-exclamation-triangle'}))
     .wait(1000)
     .destroy();
 }
@@ -292,6 +320,12 @@ function from_var2_to_main(tl) {
     .move(sensor7)
     .move(sensor6)
     .move(sensor6_to_main)
+    .destroy();
+}
+function from_var3_to_main(tl) {
+  new Packet(tl, sensor2)
+    .move(sensor1)
+    .move(sensor1_to_main)
     .destroy();
 }
 function from_main_to_router(tl) {
@@ -313,6 +347,26 @@ function from_router_to_server(tl, msj) {
     .wait(2000)
     .destroy()
     .wait(500);
+}
+function from_router_to_server_var3(tl) {
+  new Packet(tl, router1.left)
+    .move(router1_to_switch1)
+    .destroy();
+  new Packet(tl, switch1.top)
+    .move(switch1_to_server)
+    .destroy();
+  var msj1 = new Message(tl, server, "¿Dónde está el fuego?")
+    .wait(500);
+  var time = msj1.time;
+  msj1.wait(4000)
+    .destroy()
+    .wait(500);
+  new Picture(tl, {top: '162px', left: '398px'}, 'resources/images/arrow.png', time)
+    .wait(3000)
+    .destroy();
+  new Message(tl, {top: '170px', left: '436px'}, "Se sabe porque los sensores tienen ubicación fija", time)
+    .wait(3000)
+    .destroy();
 }
 function from_server_to_everyone(tl) {
   var time = new Packet(tl, server)
