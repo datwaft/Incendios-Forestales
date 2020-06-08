@@ -306,6 +306,34 @@ function show_var3_initial(tl) {
     .wait(1000)
     .destroy();
 }
+function show_var4_initial(tl) {
+  new Picture(tl, {top: '327px', left: '524px'}, 'resources/images/rain.png')
+    .wait(500);
+  new Message(tl, new_coord(sensor8, 0, 7), $('<i>', {class: 'fa fa-exclamation-triangle'}))
+    .wait(1000)
+    .destroy();
+}
+function show_var5_initial(tl) {
+  new Picture(tl, {top: '370px', left: '490px'}, 'resources/images/wind.png')
+    .wait(500);
+  new Message(tl, new_coord(sensor5, 0, 7), $('<i>', {class: 'fa fa-exclamation-triangle'}))
+    .wait(1000)
+    .destroy();
+}
+function show_var6_initial(tl) {
+  new Picture(tl, {top: '347px', left: '544px'}, 'resources/images/lightning.png')
+    .wait(500);
+  new Message(tl, new_coord(sensor9, 0, 7), $('<i>', {class: 'fa fa-exclamation-triangle'}))
+    .wait(1000)
+    .destroy();
+}
+function show_var7_initial(tl) {
+  new Picture(tl, {top: '347px', left: '463px'}, 'resources/images/fire.png')
+    .wait(500);
+  new Message(tl, new_coord(sensor4, 0, 7), $('<i>', {class: 'fa fa-exclamation-triangle'}))
+    .wait(1000)
+    .destroy();
+}
 function from_var1_to_main(tl) {
   new Packet(tl, sensor3)
     .move(sensor2)
@@ -324,6 +352,38 @@ function from_var2_to_main(tl) {
 }
 function from_var3_to_main(tl) {
   new Packet(tl, sensor2)
+    .move(sensor1)
+    .move(sensor1_to_main)
+    .destroy();
+}
+function from_var4_to_main(tl) {
+  new Packet(tl, sensor8)
+    .move(sensor7)
+    .move(sensor6)
+    .move(sensor6_to_main)
+    .destroy();
+}
+function from_var5_to_main(tl) {
+  new Packet(tl, sensor5)
+    .move(sensor4)
+    .move(sensor3)
+    .move(sensor2)
+    .move(sensor1)
+    .move(sensor1_to_main)
+    .destroy();
+}
+function from_var6_to_main(tl) {
+  new Packet(tl, sensor9)
+    .move(sensor8)
+    .move(sensor7)
+    .move(sensor6)
+    .move(sensor6_to_main)
+    .destroy();
+}
+function from_var7_to_main(tl) {
+  new Packet(tl, sensor4)
+    .move(sensor3)
+    .move(sensor2)
     .move(sensor1)
     .move(sensor1_to_main)
     .destroy();
