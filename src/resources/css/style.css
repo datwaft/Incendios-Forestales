@@ -192,7 +192,14 @@ input[type="range"] {
   opacity: 0;
   font-size: 1rem;
   position: absolute;
-  top: 74.4446%;
-  left: 57.052%;
+  top: 0%;
+  left: 0%;
   text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+}
+
+.image {
+  position: absolute;
+  width: 75px;
+  height: 75px;
+  opacity: 0;
 }

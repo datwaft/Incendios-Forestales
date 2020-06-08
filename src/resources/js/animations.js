@@ -76,6 +76,53 @@ class Packet {
     return this;
   }
 }
+// Message class
+class Message {
+  constructor(tl, pos, msj, offset) {
+    this.time = (offset ? offset : tl.duration);
+    this.tl = tl;
+    this.pos = pos;
+    var tooltip = $('<div>', {
+      class: 'tooltip',
+      css: {
+        top: this.pos.top,
+        left: this.pos.left
+      }
+    });
+    this.message = $('<div>', { class: 'message' });
+    if (msj instanceof jQuery) {
+      this.message.append(msj);
+    } else {
+      this.message.text(msj);
+    }
+    this.arrow = $('<div>', { class: 'arrow' });
+    tooltip.append(this.message);
+    tooltip.append(this.arrow);
+    $('#canvas').append(tooltip);
+    tl.add({
+      targets: [this.message.get(0), this.arrow.get(0)],
+      opacity: 1,
+      duration: 500
+    }, this.time);
+    this.time += 500;
+  }
+  wait(duration) {
+    this.tl.add({
+      duration: duration
+    }, this.time);
+    this.time += duration;
+    return this;
+  }
+  destroy() {
+    this.tl.add({
+      targets: [this.message.get(0), this.arrow.get(0)],
+      opacity: 0,
+      duration: 500
+    }, this.time);
+    this.time += 500;
+    return this;
+  }
+}
 // Ubicación de los diferentes cosos
 var sensor1 = {top: '232px', left: '476px'};
 var sensor2 = {top: '289px', left: '446px'};
@@ -195,11 +242,56 @@ var switch2_to_pc = [
   pc
 ];
 // -----------------------------------
+function image(tl, pos, src) {
+  var img = $('<img>', {
+    class: 'image',
+    src: src,
+    css: {
+      top: pos.top,
+      left: pos.left,
+    }
+  }).appendTo('#canvas');
+  tl.add({
+    targets: img.get(0),
+    opacity: 1,
+    duration: 500
+  });
+  tl.add({
+    duration: 500
+  });
+}
+function new_coord(original, top, left) {
+  return {
+    top: (parseInt(original.top) + top) + 'px',
+    left: (parseInt(original.left) + left) + 'px'
+  };
+}
+function show_var1_initial(tl) {
+  image(tl, {top: '304px', left: '494px'}, 'resources/images/heat.png')
+  new Message(tl, new_coord(sensor3, 0, 7), $('<i>', {class: 'fa fa-exclamation-triangle'}))
+    .wait(1000)
+    .destroy();
+}
+function show_var2_initial(tl) {
+  image(tl, {top: '363px', left: '521px'}, 'resources/images/humidity.png')
+  new Message(tl, new_coord(sensor10, 0, 7), $('<i>', {class: 'fa fa-exclamation-triangle'}))
+    .wait(1000)
+    .destroy();
+}
 function from_var1_to_main(tl) {
   new Packet(tl, sensor3)
     .move(sensor2)
     .move(sensor1)
     .move(sensor1_to_main)
+    .destroy();
+}
+function from_var2_to_main(tl) {
+  new Packet(tl, sensor10)
+    .move(sensor9)
+    .move(sensor8)
+    .move(sensor7)
+    .move(sensor6)
+    .move(sensor6_to_main)
     .destroy();
 }
 function from_main_to_router(tl) {
@@ -210,26 +302,35 @@ function from_main_to_router(tl) {
     .move(router1.right)
     .destroy();
 }
-function from_router_to_server(tl) {
+function from_router_to_server(tl, msj) {
   new Packet(tl, router1.left)
     .move(router1_to_switch1)
     .destroy();
   new Packet(tl, switch1.top)
     .move(switch1_to_server)
     .destroy();
+  new Message(tl, server, msj)
+    .wait(2000)
+    .destroy()
+    .wait(500);
 }
 function from_server_to_everyone(tl) {
   var time = new Packet(tl, server)
-    .move(switch1_to_server.reverse())
+    .move(switch1_to_server.slice().reverse())
     .destroy()
     .time;
-  new Packet(tl, switch1.left, time)
+  var time_sinac = new Packet(tl, switch1.left, time)
     .move(switch1_to_sinac)
+    .destroy()
+    .time;
+  new Message(tl, sinac, "Recibido!", time_sinac)
+    .wait(1000)
     .destroy();
-  new Packet(tl, switch1.right, time)
-    .move(router1_to_switch1.reverse())
-    .destroy();
-  time = new Packet(tl, router1.bottom)
+  time = new Packet(tl, switch1.right, time)
+    .move(router1_to_switch1.slice().reverse())
+    .destroy()
+    .time;
+  time = new Packet(tl, router1.bottom, time)
     .move(internet.top)
     .destroy()
     .time;
@@ -244,20 +345,36 @@ function from_server_to_everyone(tl) {
     .move(router3_to_switch2)
     .destroy()
     .time;
-  new Packet(tl, switch2.left, time)
+  var time_station = new Packet(tl, switch2.left, time)
     .move(switch2_to_station)
+    .destroy()
+    .time;
+  new Message(tl, station, "Recibido!", time_station)
+    .wait(1000)
     .destroy();
-  new Packet(tl, switch2.bottom, time)
+  var time_pc = new Packet(tl, switch2.bottom, time)
     .move(switch2_to_pc)
+    .destroy()
+    .time;
+  new Message(tl, pc, "Recibido!", time_pc)
+    .wait(1000)
     .destroy();
   time = new Packet(tl, switch2.right, time)
     .move(switch2_to_wireless)
     .destroy()
     .time;
-  new Packet(tl, wireless.left_bottom, time)
+  var time_cellphone = new Packet(tl, wireless.left_bottom, time)
     .move(cellphone)
+    .destroy()
+    .time;
+  new Message(tl, cellphone, "Recibido!", time_cellphone)
+    .wait(1000)
     .destroy();
-  new Packet(tl, wireless.right, time)
+  var time_tablet = new Packet(tl, wireless.right, time)
     .move(tablet)
+    .destroy()
+    .time;
+  new Message(tl, tablet, "Recibido!", time_tablet)
+    .wait(1000)
     .destroy();
 }
