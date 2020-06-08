@@ -413,19 +413,20 @@ function from_router_to_server_var3(tl) {
   new Packet(tl, router1.left)
     .move(router1_to_switch1)
     .destroy();
-  new Packet(tl, switch1.top)
+  var time = new Packet(tl, switch1.top)
     .move(switch1_to_server)
-    .destroy();
-  var msj1 = new Message(tl, server, "¿Dónde está el fuego?")
+    .destroy()
+    .time;
+  var msj1 = new Message(tl, server, "¿Dónde está el fuego?", time, false)
     .wait(500);
-  var time = msj1.time;
+  time = msj1.time;
   msj1.wait(4000)
     .destroy()
     .wait(500);
   new Picture(tl, {top: '162px', left: '398px'}, 'resources/images/arrow.png', time)
     .wait(3000)
     .destroy();
-  new Message(tl, {top: '170px', left: '436px'}, "Se sabe porque los sensores tienen ubicación fija", time, false)
+  new Message(tl, {top: '170px', left: '436px'}, "Se sabe porque los sensores tienen ubicación fija", time)
     .wait(3000)
     .destroy();
 }
