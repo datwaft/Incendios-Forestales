@@ -12,6 +12,11 @@ function var7_createAssets() {
    * Estos objetos se pueden crear usando JQuery como una tag:
    *  var objecto = $("<tag>")
    */
+  canvas = $('#canvas');
+  canvas.append($('<img>', {
+    class: 'background',
+    src: 'resources/images/ultraviolet.svg'
+  }));
   console.log("Created assets for variable 7.");
 }
 
