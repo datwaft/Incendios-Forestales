@@ -39,3 +39,38 @@
   border-top-color: var(--bg-tooltip);
   transform-origin: top center;
 }
+
+.tooltip-bottom {
+  position: absolute;
+}
+.tooltip-bottom .message,
+.tooltip-bottom .arrow {
+  --scale: 1;
+  --arrow-size: 10px;
+  position: absolute;
+  bottom: 0rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(var(--translate-y, 0)) scale(var(--scale));
+  transform-origin: top center;
+  opacity: 0;
+}
+
+.tooltip-bottom .message {
+  padding: var(--padding-tooltip);
+  border-radius: .3rem;
+  text-align: center;
+  width: max-content;
+  max-width: max(20vw, 100%);
+  background: var(--bg-tooltip);
+  color: var(--fg-tooltip);
+  font-family: var(--font-tooltip);
+  z-index: 1;
+  --translate-y: calc(100% + var(--arrow-size));
+}
+.tooltip-bottom .arrow {
+  border: var(--arrow-size) solid transparent;
+  z-index: 1;
+  --translate-y: calc(var(--arrow-size) + 1px);
+  border-bottom-color: var(--bg-tooltip);
+  transform-origin: bottom center;
+}

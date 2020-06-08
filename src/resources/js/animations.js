@@ -78,12 +78,12 @@ class Packet {
 }
 // Message class
 class Message {
-  constructor(tl, pos, msj, offset) {
+  constructor(tl, pos, msj, offset, top = true) {
     this.time = (offset ? offset : tl.duration);
     this.tl = tl;
     this.pos = pos;
     var tooltip = $('<div>', {
-      class: 'tooltip',
+      class: (top ? 'tooltip' : 'tooltip-bottom'),
       css: {
         top: this.pos.top,
         left: this.pos.left
@@ -400,10 +400,11 @@ function from_router_to_server(tl, msj) {
   new Packet(tl, router1.left)
     .move(router1_to_switch1)
     .destroy();
-  new Packet(tl, switch1.top)
+  var time = new Packet(tl, switch1.top)
     .move(switch1_to_server)
-    .destroy();
-  new Message(tl, server, msj)
+    .destroy()
+    .time;
+  new Message(tl, server, msj, time, false)
     .wait(2000)
     .destroy()
     .wait(500);
@@ -424,7 +425,7 @@ function from_router_to_server_var3(tl) {
   new Picture(tl, {top: '162px', left: '398px'}, 'resources/images/arrow.png', time)
     .wait(3000)
     .destroy();
-  new Message(tl, {top: '170px', left: '436px'}, "Se sabe porque los sensores tienen ubicación fija", time)
+  new Message(tl, {top: '170px', left: '436px'}, "Se sabe porque los sensores tienen ubicación fija", time, false)
     .wait(3000)
     .destroy();
 }
