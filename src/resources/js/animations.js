@@ -388,8 +388,12 @@ function from_server_to_everyone(tl) {
     .move(internet.top)
     .destroy()
     .time;
-  new Packet(tl, internet.left, time)
+  var time_aws = new Packet(tl, internet.left, time)
     .move(internet_to_aws)
+    .destroy()
+    .time;
+  new Message(tl, aws, "Entendido y guardado!", time_aws)
+    .wait(1000)
     .destroy();
   time = new Packet(tl, internet.bottom, time)
     .move(router3.top)
