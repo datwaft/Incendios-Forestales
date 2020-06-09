@@ -1,6 +1,6 @@
 $(document).ready(() => {
   console.log("Page has been loaded.");
-  var1();
+  topology();
 });
 function initClick() {
   $("#var-1").prop("onclick", null).off("click");
@@ -17,6 +17,8 @@ function initClick() {
   $("#var-6").click(var6);
   $("#var-7").prop("onclick", null).off("click");
   $("#var-7").click(var7);
+  $("#topology").prop("onclick", null).off("click");
+  $("#topology").click(topology);
 }
 function clearSelected() {
   $("#var-1").removeClass("selected");
@@ -26,6 +28,7 @@ function clearSelected() {
   $("#var-5").removeClass("selected");
   $("#var-6").removeClass("selected");
   $("#var-7").removeClass("selected");
+  $("#topology").removeClass("selected");
 }
 function clearAssets() {
   $("#canvas").empty();
@@ -33,6 +36,7 @@ function clearAssets() {
 }
 function var1() {
   console.log("Variable 1 option has been selected.");
+  $("#control").show();
   initClick();
   clearSelected();
   $("#var-1").prop("onclick", null).off("click");
@@ -43,6 +47,7 @@ function var1() {
 }
 function var2() {
   console.log("Variable 2 option has been selected.");
+  $("#control").show();
   initClick();
   clearSelected();
   $("#var-2").prop("onclick", null).off("click");
@@ -53,6 +58,7 @@ function var2() {
 }
 function var3() {
   console.log("Variable 3 option has been selected.");
+  $("#control").show();
   initClick();
   clearSelected();
   $("#var-3").prop("onclick", null).off("click");
@@ -63,6 +69,7 @@ function var3() {
 }
 function var4() {
   console.log("Variable 4 option has been selected.");
+  $("#control").show();
   initClick();
   clearSelected();
   $("#var-4").prop("onclick", null).off("click");
@@ -73,6 +80,7 @@ function var4() {
 }
 function var5() {
   console.log("Variable 5 option has been selected.");
+  $("#control").show();
   initClick();
   clearSelected();
   $("#var-5").prop("onclick", null).off("click");
@@ -83,6 +91,7 @@ function var5() {
 }
 function var6() {
   console.log("Variable 6 option has been selected.");
+  $("#control").show();
   initClick();
   clearSelected();
   $("#var-6").prop("onclick", null).off("click");
@@ -92,6 +101,7 @@ function var6() {
   var6_animation();
 }
 function var7() {
+  $("#control").show();
   console.log("Variable 7 option has been selected.");
   initClick();
   clearSelected();
@@ -100,4 +110,16 @@ function var7() {
   clearAssets();
   var7_createAssets();
   var7_animation();
+}
+
+function topology() {
+  console.log("Topology option has been selected.");
+  initClick();
+  clearSelected();
+  $("#topology").prop("onclick", null).off("click");
+  $("#topology").addClass("selected");
+  clearAssets();
+  topology_createAssets();
+  $("#control").hide();
+
 }
